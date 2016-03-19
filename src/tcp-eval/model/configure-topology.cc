@@ -24,6 +24,7 @@
 #include "configure-topology.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
+#include "data-rate.h"
 
 namespace ns3 {
 
@@ -39,9 +40,9 @@ ConfigureTopology::GetTypeId (void)
     .SetGroupName ("TcpEvaluationSuite")
     .AddAttribute ("BottleneckBandwidth",
                    "Bottleneck link capacity in Mbps",
-                   DoubleValue (10),
-                   MakeDoubleAccessor (&ConfigureTopology::m_bottleneckBandwidth),
-                   MakeDoubleChecker<double> (0))
+                   DataRateValue (10),
+                   MakeDataRateAccessor (&ConfigureTopology::m_bottleneckBandwidth),
+                   MakeDataRateChecker<DataRate> (0))
     .AddAttribute ("BottleneckCount", "Number of bottleneck links",
                    UintegerValue (1),
                    MakeUintegerAccessor (&ConfigureTopology::m_nBottlenecks),
@@ -109,7 +110,7 @@ ConfigureTopology::SetRedParameters ()
 }
 
 void
-ConfigureTopology::SetBottleneckBandwidth (double bottleneckBandwidth)
+ConfigureTopology::SetBottleneckBandwidth (DataRate bottleneckBandwidth)
 {
   m_bottleneckBandwidth = bottleneckBandwidth;
 }
@@ -180,7 +181,7 @@ ConfigureTopology::GetNonBottleneckDelay (void) const
   return m_nonBottleneckDelay;
 }
 
-double
+DataRate
 ConfigureTopology::GetNonBottleneckBandwidth (void) const
 {
   return m_nonBottleneckBandwidth;
