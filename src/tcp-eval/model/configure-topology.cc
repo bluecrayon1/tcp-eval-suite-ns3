@@ -40,9 +40,9 @@ ConfigureTopology::GetTypeId (void)
     .SetGroupName ("TcpEvaluationSuite")
     .AddAttribute ("BottleneckBandwidth",
                    "Bottleneck link capacity in Mbps",
-                   DataRateValue (10),
+                   DataRateValue ("10Mbps"),
                    MakeDataRateAccessor (&ConfigureTopology::m_bottleneckBandwidth),
-                   MakeDataRateChecker<DataRate> (0))
+                   MakeDataRateChecker())
     .AddAttribute ("BottleneckCount", "Number of bottleneck links",
                    UintegerValue (1),
                    MakeUintegerAccessor (&ConfigureTopology::m_nBottlenecks),
@@ -115,7 +115,7 @@ ConfigureTopology::SetBottleneckBandwidth (DataRate bottleneckBandwidth)
   m_bottleneckBandwidth = bottleneckBandwidth;
 }
 
-double
+DataRate
 ConfigureTopology::GetBottleneckBandwidth (void) const
 {
   return m_bottleneckBandwidth;
