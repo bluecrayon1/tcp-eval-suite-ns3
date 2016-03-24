@@ -78,14 +78,14 @@ public:
    *
    * \param bottleneckBandwidth the bandwidth of bottleneck links
    */
-  void SetBottleneckBandwidth (double bottleneckBandwidth);
+  void SetBottleneckBandwidth (DataRate bottleneckBandwidth);
 
   /**
    * \brief Get the bandwidth of bottleneck link
    *
    * \return the bandwidth of bottleneck link
    */
-  double GetBottleneckBandwidth (void) const;
+  DataRate GetBottleneckBandwidth (void) const;
 
   /**
    * \brief Set the number of bottleneck links
@@ -162,7 +162,7 @@ public:
    *
    * \return the bandwidth of non-bottleneck link
    */
-  double GetNonBottleneckBandwidth (void) const;
+  DataRate GetNonBottleneckBandwidth (void) const;
 
   /**
    * \brief Get the size of buffer on non-bottleneck link
@@ -172,17 +172,17 @@ public:
   uint32_t GetNonBottleneckBuffer (void) const;
 
 protected:
-  double   m_bottleneckBandwidth;       //!< Bandwidth of bottleneck link in Mbps
-  uint32_t m_nBottlenecks;              //!< Number of bottleneck links.
-  Time     m_rttp;                      //!< Round trip propagation delay in seconds
-  Time     m_rttDifference;             //!< Flow RTT difference in seconds
-  Time     m_delayDifference;           //!< Delay difference in seconds
-  Time     m_bottleneckDelay;           //!< Delay of bottleneck link in seconds
-  uint32_t m_bottleneckBuffer;          //!< Size of the bottleneck buffer
-  double   m_nonBottleneckBandwidth;    //!< Bandwidth of non-bottleneck link in Mbps
-  Time     m_nonBottleneckDelay;        //!< Delay of non-bottleneck link in seconds
-  uint32_t m_nonBottleneckBuffer;       //!< Size of the non-bottleneck buffer
-  double   m_bottleneckBufferBdp;       //!< Bandwidth-Delay Product for the bottleneck link
+  DataRate   m_bottleneckBandwidth;       //!< Bandwidth of bottleneck link in Mbps
+  uint32_t   m_nBottlenecks;              //!< Number of bottleneck links.
+  Time       m_rttp;                      //!< Round trip propagation delay in seconds
+  Time       m_rttDifference;             //!< Flow RTT difference in seconds
+  Time       m_delayDifference;           //!< Delay difference in seconds
+  Time       m_bottleneckDelay;           //!< Delay of bottleneck link in seconds
+  uint32_t   m_bottleneckBuffer;          //!< Size of the bottleneck buffer
+  DataRate   m_nonBottleneckBandwidth;    //!< Bandwidth of non-bottleneck link in Mbps
+  Time       m_nonBottleneckDelay;        //!< Delay of non-bottleneck link in seconds
+  uint32_t   m_nonBottleneckBuffer;       //!< Size of the non-bottleneck buffer
+  double     m_bottleneckBufferBdp;       //!< Bandwidth-Delay Product for the bottleneck link
 };
 }
 
