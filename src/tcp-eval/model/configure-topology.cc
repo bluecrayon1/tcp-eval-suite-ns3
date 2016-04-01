@@ -17,6 +17,7 @@
  *
  * Authors: Dharmendra Kumar Mishra <dharmendra.nitk@gmail.com>
  *          Mohit P. Tahiliani <tahiliani@nitk.edu.in>
+ *          Wasiq Mukhtar <wasiqmukhtar@gmail.com>
  */
 
 // Implement an object to configure topology in tcp-eval.
@@ -24,7 +25,7 @@
 #include "configure-topology.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
-#include "data-rate.h"
+#include "ns3/data-rate.h"
 
 namespace ns3 {
 
@@ -40,7 +41,7 @@ ConfigureTopology::GetTypeId (void)
     .SetGroupName ("TcpEvaluationSuite")
     .AddAttribute ("BottleneckBandwidth",
                    "Bottleneck link capacity in Mbps",
-                   DataRateValue ("10Mbps"),
+                   DataRateValue (DataRate ("10Mbps")),
                    MakeDataRateAccessor (&ConfigureTopology::m_bottleneckBandwidth),
                    MakeDataRateChecker())
     .AddAttribute ("BottleneckCount", "Number of bottleneck links",
@@ -79,7 +80,7 @@ ConfigureTopology::SetTopologyParameters (Ptr<TrafficParameters> traffic, uint32
   m_bottleneckDelay = Seconds ((rttp * 0.5 * 0.8) / nBottlenecks);
   m_delayDifference = Seconds ((rttDifference * 1.0) / 4.0);
   m_nonBottleneckDelay = Seconds ((rttp * 0.5 * 0.2) / 2.0);
-  m_nonBottleneckBandwidth = m_bottleneckBandwidth * 1.0 * 2;
+  m_nonBottleneckBandwidth = m_nonBottleneckBandwidth.GetBitRate() * 1.0 * 2;
 
   uint32_t numOfFtpFwd = traffic->GetNumOfFwdFtpFlows ();
   uint32_t numOfFtpRev = traffic->GetNumOfRevFtpFlows ();
@@ -87,7 +88,7 @@ ConfigureTopology::SetTopologyParameters (Ptr<TrafficParameters> traffic, uint32
   m_bottleneckBufferBdp = 1.0;
 
   double avgRtt = (rttp + ((rttDifference * 1.0 * (numOfFtpFwd - 1)) / 2)) * 1000;
-  m_bottleneckBuffer = (m_bottleneckBufferBdp * m_bottleneckBandwidth * avgRtt) / 8.0;
+  m_bottleneckBuffer = (m_bottleneckBufferBdp * m_bottleneckBandwidth.GetBitRate() * avgRtt) / 8.0;
 
   if (m_bottleneckBuffer < minBottleneckBuffer)
     {
