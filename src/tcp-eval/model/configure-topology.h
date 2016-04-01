@@ -17,6 +17,7 @@
  *
  * Authors: Dharmendra Kumar Mishra <dharmendra.nitk@gmail.com>
  *          Mohit P. Tahiliani <tahiliani@nitk.edu.in>
+ *          Wasiq Mukhtar <wasiqmukhtar@gmail.com>
  */
 
 // Define an object to configure topology in tcp-eval.
@@ -26,6 +27,7 @@
 
 #include <stdint.h>
 
+#include "ns3/data-rate.h"
 #include "ns3/object.h"
 #include "ns3/ptr.h"
 #include "ns3/node.h"
