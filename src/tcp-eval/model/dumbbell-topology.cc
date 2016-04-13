@@ -36,6 +36,7 @@
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
 #include "ns3/point-to-point-layout-module.h"
+#include "ns3/data-rate.h"
 
 namespace ns3 {
 
@@ -70,11 +71,11 @@ DumbbellTopology::CreateDumbbellTopology (Ptr<TrafficParameters> traffic, std::s
   SetTopologyParameters (traffic, nBottlenecks);
 
   PointToPointHelper pointToPointRouter, pointToPointLeaf;
-  pointToPointRouter.SetDeviceAttribute  ("DataRate", StringValue (to_string<double> (m_bottleneckBandwidth) + std::string ("Mbps")));
-  pointToPointRouter.SetChannelAttribute ("Delay", StringValue (to_string<double> (m_bottleneckDelay.ToDouble (Time::S)) + std::string ("s")));
+  pointToPointRouter.SetDeviceAttribute  ("DataRate", DataRateValue(DataRate(m_bottleneckBandwidth)));
+  pointToPointRouter.SetChannelAttribute ("Delay", TimeValue(m_bottleneckDelay));
 
-  pointToPointLeaf.SetDeviceAttribute  ("DataRate", StringValue (to_string<double> (m_nonBottleneckBandwidth) + std::string ("Mbps")));
-  pointToPointLeaf.SetChannelAttribute ("Delay", StringValue (to_string<double> (m_nonBottleneckDelay.ToDouble (Time::S)) + std::string ("s")));
+  pointToPointLeaf.SetDeviceAttribute  ("DataRate", DataRateValue(DataRate(m_nonBottleneckBandwidth)));
+  pointToPointLeaf.SetChannelAttribute ("Delay", TimeValue(Time(m_nonBottleneckDelay)));
   pointToPointLeaf.SetQueue ("ns3::DropTailQueue",
                              "Mode", StringValue ("QUEUE_MODE_PACKETS"),
                              "MaxPackets", UintegerValue (m_nonBottleneckBuffer));
@@ -85,8 +86,8 @@ DumbbellTopology::CreateDumbbellTopology (Ptr<TrafficParameters> traffic, std::s
     {
       SetRedParameters ();
       pointToPointRouter.SetQueue ("ns3::RedQueue",
-                                   "LinkBandwidth", DataRateValue (DataRate (to_string<double> (m_bottleneckBandwidth) + std::string ("Mbps"))),
-                                   "LinkDelay", TimeValue (m_bottleneckDelay),
+                                   "LinkBandwidth", DataRateValue (DataRate(m_bottleneckBandwidth)),
+                                   "LinkDelay", TimeValue (Time(m_bottleneckDelay)),
                                    "QueueLimit", UintegerValue (m_bottleneckBuffer));
     }
   else
