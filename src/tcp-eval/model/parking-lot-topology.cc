@@ -36,7 +36,7 @@
 #include "ns3/point-to-point-module.h"
 #include "ns3/applications-module.h"
 #include "ns3/point-to-point-layout-module.h"
-
+#include "ns3/data-rate.h"
 namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("ParkingLotTopology");
@@ -85,17 +85,17 @@ ParkingLotTopology::CreateParkingLotTopology (Ptr<TrafficParameters> trafficPara
   SetTopologyParameters (trafficParams, BottleneckCount ());
 
   PointToPointHelper pointToPointRouter, pointToPointLeaf, pointToPointCrossLinks;
-  pointToPointRouter.SetDeviceAttribute  ("DataRate", StringValue (to_string<double> (m_bottleneckBandwidth) + std::string ("Mbps")));
-  pointToPointRouter.SetChannelAttribute ("Delay", StringValue (to_string<double> (m_bottleneckDelay.ToDouble (Time::S)) + std::string ("s")));
+  pointToPointRouter.SetDeviceAttribute  ("DataRate", DataRateValue(DataRate(m_bottleneckBandwidth)));
+  pointToPointRouter.SetChannelAttribute ("Delay", TimeValue(Time(m_bottleneckDelay)));
 
-  pointToPointLeaf.SetDeviceAttribute  ("DataRate", StringValue (to_string<double> (m_nonBottleneckBandwidth) + std::string ("Mbps")));
-  pointToPointLeaf.SetChannelAttribute ("Delay", StringValue (to_string<double> (m_nonBottleneckDelay.ToDouble (Time::S)) + std::string ("s")));
+  pointToPointLeaf.SetDeviceAttribute  ("DataRate", DataRateValue(DataRate(m_nonBottleneckBandwidth)));
+  pointToPointLeaf.SetChannelAttribute ("Delay", TimeValue(Time(m_nonBottleneckDelay)));
   pointToPointLeaf.SetQueue ("ns3::DropTailQueue",
                              "Mode", StringValue ("QUEUE_MODE_PACKETS"),
                              "MaxPackets", UintegerValue (m_nonBottleneckBuffer));
 
-  pointToPointCrossLinks.SetDeviceAttribute  ("DataRate", StringValue (to_string<double> (m_nonBottleneckBandwidth) + std::string ("Mbps")));
-  pointToPointCrossLinks.SetChannelAttribute ("Delay", StringValue (to_string<double> (m_crossLinkDelay.ToDouble (Time::S)) + std::string ("s")));
+  pointToPointCrossLinks.SetDeviceAttribute  ("DataRate", DataRateValue(DataRate(m_nonBottleneckBandwidth)));
+  pointToPointCrossLinks.SetChannelAttribute ("Delay", TimeValue(Time(m_crossLinkDelay)));
   pointToPointCrossLinks.SetQueue ("ns3::DropTailQueue",
                                    "Mode", StringValue ("QUEUE_MODE_PACKETS"),
                                    "MaxPackets", UintegerValue (m_nonBottleneckBuffer));
@@ -106,7 +106,7 @@ ParkingLotTopology::CreateParkingLotTopology (Ptr<TrafficParameters> trafficPara
     {
       SetRedParameters ();
       pointToPointRouter.SetQueue ("ns3::RedQueue",
-                                   "LinkBandwidth", DataRateValue (DataRate (to_string<double> (m_bottleneckBandwidth) + std::string ("Mbps"))),
+                                   "LinkBandwidth", DataRateValue (DataRate (m_bottleneckBandwidth)),
                                    "LinkDelay", TimeValue (m_bottleneckDelay),
                                    "QueueLimit", UintegerValue (m_bottleneckBuffer));
     }
