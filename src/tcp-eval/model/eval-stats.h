@@ -39,6 +39,7 @@
 #include "ns3/point-to-point-module.h"
 #include "ns3/point-to-point-layout-module.h"
 #include "ns3/applications-module.h"
+#include "ns3/data-rate.h"
 
 namespace ns3 {
 
@@ -59,7 +60,7 @@ public:
    * \param rttp Round Trip Time used in the current simulation.
    * \param filename The file to which the computed values are stored.
    */
-  EvalStats (uint32_t bandwidth, Time rttp, std::string fileName);
+  EvalStats (DataRate bandwidth, Time rttp, std::string fileName);
 
   /**
    * \brief Destructor
@@ -117,7 +118,7 @@ public:
 
 private:
   uint32_t                    m_bytesOut;		//!< Number of bytes sent per second
-  uint32_t                    m_bandwidth;		//!< Bandwidth of bottleneck link in Mbps
+  DataRate                    m_bandwidth;		//!< Bandwidth of bottleneck link in Mbps
   uint32_t                    m_sumQueueLength;		//!< Sum of sampled queue lengths
   uint32_t                    m_nthSampleInInterval;	//!< Number of samples for queue lengths
   uint32_t                    m_numFtpFlows;		//!< Number of forward FTP Flows
