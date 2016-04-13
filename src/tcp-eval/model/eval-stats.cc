@@ -26,7 +26,7 @@
 
 namespace ns3 {
 
-EvalStats::EvalStats (uint32_t bandwidth, Time rttp, std::string fileName)
+EvalStats::EvalStats (DataRate bandwidth, Time rttp, std::string fileName)
 {
   m_totalUtilization = 0;
   m_totalQueueSize = 0;
@@ -49,7 +49,7 @@ EvalStats::~EvalStats ()
 void
 EvalStats::ComputeMetrics ()
 {
-  m_totalUtilization += (double) m_bytesOut * 8.0 / ( m_bandwidth * 1000 * 1000 );
+  m_totalUtilization += m_bytesOut * 8.0 / ( m_bandwidth.GetBitRate() * 1000 * 1000 );
   m_bytesOut = 0;
 
   UintegerValue queueSize;
