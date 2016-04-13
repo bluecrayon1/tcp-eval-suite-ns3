@@ -29,6 +29,7 @@
 #include "configure-topology.h"
 #include "traffic-parameters.h"
 #include "create-traffic.h"
+#include "ns3/data-rate.h"
 
 namespace ns3 {
 
