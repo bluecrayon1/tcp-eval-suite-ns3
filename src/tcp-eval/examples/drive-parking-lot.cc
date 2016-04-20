@@ -19,13 +19,14 @@
  *          Mohit P. Tahiliani <tahiliani@nitk.edu.in>
  */
 
-// This example is a part of TCL evaluation suite and 
+// This example is a part of TCL evaluation suite and
 // creates a parking-lot scenario.
 
 #include "ns3/core-module.h"
 #include "ns3/configure-topology.h"
 #include "ns3/traffic-parameters.h"
 #include "ns3/parking-lot-topology.h"
+#include "ns3/data-rate.h"
 
 using namespace ns3;
 
@@ -35,7 +36,7 @@ int
 main (int argc, char *argv[])
 {
   // Set default values for topology
-  double        bottleneckBandwidth = 10;
+  DataRate        bottleneckBandwidth = 10;
   double        rtt = 0.08;
   double        rttDiff = 0.0;
   Time          rttp;
@@ -89,7 +90,7 @@ main (int argc, char *argv[])
   crossLinkDelay = Time::FromDouble (crsLinkDelay, Time::S);
 
   // Set topology parameters
-  Config::SetDefault ("ns3::ConfigureTopology::BottleneckBandwidth", DoubleValue (bottleneckBandwidth));
+  Config::SetDefault ("ns3::ConfigureTopology::BottleneckBandwidth", DataRateValue (DataRate(bottleneckBandwidth)));
   Config::SetDefault ("ns3::ConfigureTopology::RTTP", TimeValue (rttp));
   Config::SetDefault ("ns3::ConfigureTopology::RttDiff", TimeValue (rttDifference));
 
